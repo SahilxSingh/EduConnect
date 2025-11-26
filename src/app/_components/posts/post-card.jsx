@@ -38,19 +38,12 @@ export function PostCard({ post }) {
     if (!commentText.trim()) return;
     
     try {
-      await postAPI.addComment(post.id, {
+      const newComment = await postAPI.addComment(post.id, {
         userId,
         content: commentText,
       });
       
-      const newComment = {
-        id: Date.now().toString(),
-        userId,
-        postId: post.id,
-        content: commentText,
-        createdAt: new Date().toISOString(),
-      };
-      
+      // Use the comment returned from API which includes user information
       addComment(post.id, newComment);
       setCommentText("");
     } catch (error) {
@@ -64,10 +57,10 @@ export function PostCard({ post }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
-              {post.author?.username?.[0]?.toUpperCase() || "U"}
+              {(post.author?.name || post.author?.username)?.[0]?.toUpperCase() || "U"}
             </div>
             <div>
-              <p className="font-semibold">{post.author?.username || "Unknown"}</p>
+              <p className="font-semibold">{post.author?.name || post.author?.username || "Unknown"}</p>
               <p className="text-sm text-gray-500">
                 {new Date(post.createdAt).toLocaleDateString()}
               </p>
@@ -122,11 +115,11 @@ export function PostCard({ post }) {
               {post.comments?.map((comment) => (
                 <div key={comment.id} className="flex items-start space-x-2">
                   <div className="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center text-xs">
-                    {comment.user?.username?.[0]?.toUpperCase() || "U"}
+                    {(comment.user?.name || comment.user?.username)?.[0]?.toUpperCase() || "U"}
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-semibold">
-                      {comment.user?.username || "Unknown"}
+                      {comment.user?.name || comment.user?.username || "Unknown"}
                     </p>
                     <p className="text-sm">{comment.content}</p>
                   </div>

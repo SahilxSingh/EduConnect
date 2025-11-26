@@ -48,19 +48,12 @@ export function PostCard({ post }) {
     if (!commentText.trim()) return;
     
     try {
-      await postAPI.addComment(post.id, {
+      const newComment = await postAPI.addComment(post.id, {
         userId,
         content: commentText,
       });
       
-      const newComment = {
-        id: Date.now().toString(),
-        userId,
-        postId: post.id,
-        content: commentText,
-        createdAt: new Date().toISOString(),
-      };
-      
+      // Use the comment returned from API which includes user information
       addComment(post.id, newComment);
       setCommentText("");
     } catch (error) {

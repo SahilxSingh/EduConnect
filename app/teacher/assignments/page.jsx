@@ -113,7 +113,7 @@ export default function TeacherAssignmentsPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">Manage Assignments</h1>
+        <h1 className="text-3xl font-bold text-blue-600">Manage Assignments</h1>
         <Button onClick={() => setShowForm(!showForm)}>
           {showForm ? "Cancel" : "Create Assignment"}
         </Button>

@@ -51,7 +51,7 @@ export default function FeedPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-6" color="red">College Feed</h1>
+      <h1 className="text-3xl font-bold mb-6 text-blue-600">College Feed</h1>
       
       <CreatePost />
       

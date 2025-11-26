@@ -84,7 +84,7 @@ export default function ChatPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
-      <h1 className="text-3xl font-bold mb-6">Messages</h1>
+      <h1 className="text-3xl font-bold mb-6 text-blue-600">Messages</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[600px]">
         {/* Chat List */}

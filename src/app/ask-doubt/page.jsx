@@ -83,7 +83,7 @@ export default function AskDoubtPage() {
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="flex items-center space-x-2 mb-6">
         <HelpCircle className="h-8 w-8 text-blue-600" />
-        <h1 className="text-3xl font-bold">Ask a Doubt</h1>
+        <h1 className="text-3xl font-bold text-blue-600">Ask a Doubt</h1>
       </div>
 
       <Card className="mb-6">
@@ -134,7 +134,7 @@ export default function AskDoubtPage() {
 
       {submittedQueries.length > 0 && (
         <div>
-          <h2 className="text-2xl font-semibold mb-4">Your Queries</h2>
+          <h2 className="text-2xl text-blue-600 font-semibold mb-4">Your Queries</h2>
           <div className="space-y-4">
             {submittedQueries.map((query) => (
               <Card key={query.id}>
