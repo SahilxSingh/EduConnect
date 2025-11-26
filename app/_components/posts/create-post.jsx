@@ -27,7 +27,7 @@ export function CreatePost() {
         content,
         mediaUrl: mediaUrl || null,
       });
-      
+
       // Reload the page to show the new post with all data
       window.location.reload();
     } catch (error) {
@@ -51,14 +51,14 @@ export function CreatePost() {
             onChange={(e) => setContent(e.target.value)}
             rows={4}
           />
-          
+
           <Input
             type="url"
-            placeholder="Image/Video URL (optional)"
+            placeholder="Add a image URL (optional)"
             value={mediaUrl}
             onChange={(e) => setMediaUrl(e.target.value)}
           />
-          
+
           <div className="flex justify-end">
             <Button type="submit" disabled={loading}>
               {loading ? "Posting..." : "Post"}
@@ -69,4 +69,3 @@ export function CreatePost() {
     </Card>
   );
 }
-

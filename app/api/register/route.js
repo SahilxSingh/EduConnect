@@ -7,7 +7,14 @@ function normalize(value) {
 
 export async function POST(request) {
   try {
-    const { userId: clerkId, email, name, role, course, major } = await request.json();
+    const {
+      userId: clerkId,
+      email,
+      name,
+      role,
+      course,
+      major,
+    } = await request.json();
 
     if (!clerkId || !email || !role) {
       return NextResponse.json(
@@ -18,16 +25,17 @@ export async function POST(request) {
 
     const displayName = name?.trim() || email.split("@")[0];
 
+    // Insert into users table (merged users + profiles)
     const { data: userRecord, error: userError } = await supabaseAdmin
       .from("users")
       .upsert(
         {
-          id: clerkId,
+          id: clerkId, // Clerk ID is the primary key
           email,
           role,
+          username: displayName,
+          name: displayName,
         },
-        // Use the existing primary key/unique column for conflict handling.
-        // The previous value "clerk_id" caused: "Could not find the 'clerk_id' column of 'users'".
         { onConflict: "id" }
       )
       .select("id")
@@ -35,21 +43,6 @@ export async function POST(request) {
 
     if (userError || !userRecord) {
       throw userError || new Error("Failed to upsert user");
-    }
-
-    const { error: profileError } = await supabaseAdmin
-      .from("profiles")
-      .upsert(
-        {
-          user_id: userRecord.id,
-          username: displayName,
-          name: displayName,
-        },
-        { onConflict: "user_id" }
-      );
-
-    if (profileError) {
-      throw profileError;
     }
 
     if (role === "Student") {
@@ -92,4 +85,3 @@ export async function POST(request) {
     );
   }
 }
-

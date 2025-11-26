@@ -22,7 +22,7 @@ export default function NoticesPage() {
   const { role } = useAuthStore();
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
-    type: "Notice",
+    type: "general",
     title: "",
     content: "",
   });
@@ -61,7 +61,7 @@ export default function NoticesPage() {
       alert("Notice/Event created successfully!");
       setShowForm(false);
       setFormData({
-        type: "Notice",
+        type: "general",
         title: "",
         content: "",
       });
@@ -108,8 +108,10 @@ export default function NoticesPage() {
                   onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                   required
                 >
-                  <option value="Notice">Notice</option>
-                  <option value="Event">Event</option>
+                  <option value="general">General Notice</option>
+                  <option value="urgent">Urgent</option>
+                  <option value="event">Event</option>
+                  <option value="announcement">Announcement</option>
                 </Select>
               </div>
               
@@ -155,8 +157,8 @@ export default function NoticesPage() {
                   <div>
                     <div className="flex items-center space-x-2 mb-2">
                       <Bell className="h-5 w-5 text-blue-600" />
-                      <Badge variant={notice.type === "Event" ? "default" : "secondary"}>
-                        {notice.type}
+                      <Badge variant={notice.type === "urgent" ? "destructive" : notice.type === "event" ? "default" : "secondary"}>
+                        {notice.type.charAt(0).toUpperCase() + notice.type.slice(1)}
                       </Badge>
                     </div>
                     <CardTitle>{notice.title}</CardTitle>

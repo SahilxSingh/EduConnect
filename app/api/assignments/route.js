@@ -5,23 +5,16 @@ function normalize(value) {
   return value ? value.trim() : null;
 }
 
-async function getInternalUserId(clerkId) {
-  const { data, error } = await supabaseAdmin
-    .from("users")
-    .select("id")
-    .eq("clerk_id", clerkId)
-    .maybeSingle();
-    
-  if (error || !data) {
-    throw error || new Error("User not found");
-  }
-
-  return data.id;
+// Clerk ID is now the primary key, no conversion needed
+function getInternalUserId(clerkId) {
+  if (!clerkId) throw new Error("Missing Clerk user id");
+  return clerkId;
 }
 
 export async function POST(request) {
   try {
-    const { teacherId, course, major, title, details, dueDate } = await request.json();
+    const { teacherId, course, major, title, details, dueDate } =
+      await request.json();
 
     if (!teacherId || !course || !major || !title || !details || !dueDate) {
       return NextResponse.json(
@@ -61,10 +54,7 @@ export async function GET(request) {
     const teacherId = searchParams.get("teacherId");
 
     if (!teacherId) {
-      return NextResponse.json(
-        { error: "Missing teacherId" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Missing teacherId" }, { status: 400 });
     }
 
     const internalTeacherId = await getInternalUserId(teacherId);
@@ -98,4 +88,3 @@ export async function GET(request) {
     );
   }
 }
-
